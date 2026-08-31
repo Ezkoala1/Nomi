@@ -1,0 +1,1747 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nomi ⚡</title>
+
+  <!-- Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #070b18;
+      --panel: #0d1326;
+      --panel2: #111a32;
+      --border: #202b4a;
+      --text: #f4f5ff;
+      --muted: #8993b0;
+      --purple: #9b6cff;
+      --purple2: #7045d8;
+      --blue: #456cff;
+      --danger: #ff5f72;
+    }
+
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ---------------- AUTH ---------------- */
+
+    #authScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(112, 69, 216, .18), transparent 30%),
+        radial-gradient(circle at 80% 80%, rgba(69, 108, 255, .12), transparent 30%),
+        var(--bg);
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(13, 19, 38, .92);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 34px;
+      box-shadow: 0 25px 80px rgba(0,0,0,.4);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      font-size: 29px;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .bolt {
+      color: #a56cff;
+      filter: drop-shadow(0 0 10px rgba(165,108,255,.45));
+    }
+
+    .auth-subtitle {
+      text-align: center;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .tabs {
+      display: flex;
+      background: #080d1d;
+      border-radius: 12px;
+      padding: 4px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      flex: 1;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 10px;
+      border-radius: 9px;
+    }
+
+    .tab.active {
+      background: var(--panel2);
+      color: white;
+    }
+
+    .field {
+      margin-bottom: 14px;
+    }
+
+    .field label {
+      display: block;
+      color: #c6cbe0;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    .field input {
+      width: 100%;
+      padding: 13px 14px;
+      background: #080d1d;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      outline: none;
+    }
+
+    .field input:focus {
+      border-color: var(--purple);
+    }
+
+    .primary {
+      width: 100%;
+      border: 0;
+      padding: 13px;
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      color: white;
+      font-weight: 700;
+      margin-top: 4px;
+    }
+
+    .primary:hover {
+      opacity: .9;
+    }
+
+    .message {
+      min-height: 20px;
+      margin-top: 12px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ---------------- APP ---------------- */
+
+    #app {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 260px 1fr 320px;
+    }
+
+    .sidebar {
+      border-right: 1px solid var(--border);
+      background: #090e20;
+      padding: 22px 15px;
+    }
+
+    .sidebar .logo {
+      justify-content: flex-start;
+      padding: 0 12px;
+      margin-bottom: 30px;
+    }
+
+    .nav {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      padding: 13px;
+      border-radius: 11px;
+      text-align: left;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      color: white;
+      background: var(--panel2);
+    }
+
+    .account {
+      position: absolute;
+      bottom: 18px;
+      width: 230px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      background: var(--panel);
+      border-radius: 13px;
+    }
+
+    .account-name {
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .account-email {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .logout {
+      width: 100%;
+      margin-top: 10px;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: #bbc2d9;
+      padding: 8px;
+      border-radius: 9px;
+    }
+
+    .main {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      height: 72px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      justify-content: space-between;
+    }
+
+    .topbar h2 {
+      font-size: 19px;
+    }
+
+    .content {
+      padding: 25px;
+      overflow-y: auto;
+    }
+
+    .welcome {
+      background:
+        radial-gradient(circle at 90% 10%, rgba(155,108,255,.2), transparent 30%),
+        var(--panel);
+      border: 1px solid var(--border);
+      padding: 25px;
+      border-radius: 18px;
+      margin-bottom: 20px;
+    }
+
+    .welcome h1 {
+      font-size: 26px;
+      margin-bottom: 7px;
+    }
+
+    .welcome p {
+      color: var(--muted);
+    }
+
+    .section-title {
+      margin: 20px 0 12px;
+      font-size: 15px;
+      color: #cbd0e2;
+    }
+
+    /* ---------------- CHAT ---------------- */
+
+    .chat-layout {
+      height: calc(100vh - 72px);
+      display: grid;
+      grid-template-columns: 260px 1fr;
+    }
+
+    .conversation-list {
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+    }
+
+    .conversation-search {
+      padding: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .conversation-search input {
+      width: 100%;
+      background: #080d1d;
+      border: 1px solid var(--border);
+      color: white;
+      padding: 10px;
+      border-radius: 9px;
+      outline: none;
+    }
+
+    .conversation {
+      padding: 14px;
+      border-bottom: 1px solid rgba(32,43,74,.55);
+      cursor: pointer;
+    }
+
+    .conversation:hover,
+    .conversation.active {
+      background: var(--panel2);
+    }
+
+    .conversation strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .conversation span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+
+    .chat {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-header {
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+    }
+
+    #messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .empty-chat {
+      margin: auto;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .bubble {
+      max-width: 70%;
+      padding: 10px 13px;
+      border-radius: 14px;
+      background: var(--panel2);
+      color: white;
+      align-self: flex-start;
+      word-wrap: break-word;
+    }
+
+    .bubble.mine {
+      align-self: flex-end;
+      background: linear-gradient(135deg, #7650dd, #5141a9);
+    }
+
+    .bubble-time {
+      display: block;
+      opacity: .55;
+      font-size: 10px;
+      margin-top: 4px;
+    }
+
+    .composer {
+      display: flex;
+      gap: 8px;
+      padding: 15px;
+      border-top: 1px solid var(--border);
+    }
+
+    .composer input {
+      flex: 1;
+      background: #080d1d;
+      color: white;
+      border: 1px solid var(--border);
+      border-radius: 11px;
+      padding: 12px;
+      outline: none;
+    }
+
+    .send {
+      border: 0;
+      border-radius: 11px;
+      padding: 0 18px;
+      background: var(--purple);
+      color: white;
+      font-weight: 700;
+    }
+
+    /* ---------------- RIGHT PANEL ---------------- */
+
+    .right-panel {
+      border-left: 1px solid var(--border);
+      background: #090e20;
+      padding: 22px;
+    }
+
+    .profile-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 21px;
+      margin-bottom: 12px;
+    }
+
+    .profile-card h3 {
+      margin-bottom: 4px;
+    }
+
+    .profile-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 13px;
+      color: #9ca6c2;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #5bd68a;
+    }
+
+    /* ---------------- RESPONSIVE ---------------- */
+
+    @media (max-width: 950px) {
+      #app {
+        grid-template-columns: 80px 1fr;
+      }
+
+      .sidebar .logo {
+        justify-content: center;
+        padding: 0;
+      }
+
+      .sidebar .logo-text,
+      .nav span,
+      .account {
+        display: none;
+      }
+
+      .nav button {
+        text-align: center;
+      }
+
+      .right-panel {
+        display: none;
+      }
+    }
+
+    @media (max-width: 650px) {
+      #app {
+        display: block;
+      }
+
+      .sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 65px;
+        z-index: 10;
+        padding: 7px;
+        border-top: 1px solid var(--border);
+        border-right: 0;
+      }
+
+      .sidebar .logo,
+      .account {
+        display: none;
+      }
+
+      .nav {
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      .nav button {
+        padding: 10px 18px;
+      }
+
+      .content {
+        padding-bottom: 85px;
+      }
+
+      .chat-layout {
+        height: calc(100vh - 72px);
+        grid-template-columns: 1fr;
+      }
+
+      .conversation-list {
+        display: none;
+      }
+
+      .bubble {
+        max-width: 85%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- AUTH SCREEN -->
+  <section id="authScreen">
+    <div class="auth-card">
+
+      <div class="logo">
+        <span class="bolt">⚡</span>
+        <span>Nomi</span>
+      </div>
+
+      <p class="auth-subtitle">A simple place to message your people.</p>
+
+      <div class="tabs">
+        <button class="tab active" id="loginTab">Log in</button>
+        <button class="tab" id="signupTab">Sign up</button>
+      </div>
+
+      <form id="authForm">
+
+        <div class="field">
+          <label>Email</label>
+          <input id="email" type="email" autocomplete="email" required>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <input id="password" type="password" autocomplete="current-password" required>
+        </div>
+
+        <button class="primary" id="authButton" type="submit">
+          Log in
+        </button>
+
+        <div class="message" id="authMessage"></div>
+
+      </form>
+    </div>
+  </section>
+
+
+  <!-- APP -->
+  <section id="app" class="hidden">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+      <div class="logo">
+        <span class="bolt">⚡</span>
+        <span class="logo-text">Nomi</span>
+      </div>
+
+      <nav class="nav">
+        <button class="active" data-page="home">⌂ <span>Home</span></button>
+        <button data-page="messages">▣ <span>Messages</span></button>
+        <button data-page="people">◎ <span>People</span></button>
+        <button data-page="profile">◉ <span>Profile</span></button>
+      </nav>
+
+      <div class="account">
+        <div class="account-name" id="accountName">Loading...</div>
+        <div class="account-email" id="accountEmail"></div>
+        <button class="logout" id="logoutButton">Log out</button>
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <main class="main">
+
+      <header class="topbar">
+        <h2 id="pageTitle">Home</h2>
+      </header>
+
+      <!-- HOME -->
+      <div class="content" id="homePage">
+
+        <div class="welcome">
+          <h1 id="welcomeTitle">Welcome to Nomi ⚡</h1>
+          <p>Message friends, start conversations and stay connected.</p>
+        </div>
+
+        <div class="section-title">Your account</div>
+
+        <div class="profile-card">
+          <div class="avatar" id="homeAvatar">N</div>
+          <h3 id="homeName">Loading...</h3>
+          <p id="homeEmail"></p>
+
+          <div class="status">
+            <span class="status-dot"></span>
+            Online
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- MESSAGES -->
+      <div id="messagesPage" class="chat-layout hidden">
+
+        <aside class="conversation-list">
+
+          <div class="conversation-search">
+            <input id="conversationSearch" placeholder="Search conversations...">
+          </div>
+
+          <div id="conversationList">
+            <div class="conversation">
+              <strong>No conversations yet</strong>
+              <span>Start one from People.</span>
+            </div>
+          </div>
+
+        </aside>
+
+        <section class="chat">
+
+          <div class="chat-header" id="chatTitle">
+            Select a conversation
+          </div>
+
+          <div id="messages">
+            <div class="empty-chat">
+              Select a conversation to start messaging.
+            </div>
+          </div>
+
+          <form class="composer" id="messageForm">
+            <input
+              id="messageInput"
+              placeholder="Write a message..."
+              autocomplete="off"
+              disabled
+            >
+            <button class="send" type="submit" disabled>Send</button>
+          </form>
+
+        </section>
+
+      </div>
+
+
+      <!-- PEOPLE -->
+      <div class="content hidden" id="peoplePage">
+
+        <div class="welcome">
+          <h1>People</h1>
+          <p>Find people on Nomi.</p>
+        </div>
+
+        <div class="field">
+          <input
+            id="peopleSearch"
+            placeholder="Search by username..."
+          >
+        </div>
+
+        <div id="peopleResults"></div>
+
+      </div>
+
+
+      <!-- PROFILE -->
+      <div class="content hidden" id="profilePage">
+
+        <div class="welcome">
+          <h1>Your profile</h1>
+          <p>Manage your Nomi profile.</p>
+        </div>
+
+        <div class="profile-card">
+
+          <div class="avatar" id="profileAvatar">N</div>
+
+          <div class="field">
+            <label>Username</label>
+            <input id="usernameInput" maxlength="30">
+          </div>
+
+          <div class="field">
+            <label>Display name</label>
+            <input id="displayNameInput" maxlength="50">
+          </div>
+
+          <button class="primary" id="saveProfile">
+            Save profile
+          </button>
+
+          <div class="message" id="profileMessage"></div>
+
+        </div>
+
+      </div>
+
+    </main>
+
+
+    <!-- RIGHT -->
+    <aside class="right-panel">
+
+      <div class="section-title">Your profile</div>
+
+      <div class="profile-card">
+        <div class="avatar" id="sideAvatar">N</div>
+        <h3 id="sideName">Loading...</h3>
+        <p id="sideUsername"></p>
+
+        <div class="status">
+          <span class="status-dot"></span>
+          Online
+        </div>
+      </div>
+
+    </aside>
+
+  </section>
+
+
+<script>
+  /*
+    ============================================================
+    SUPABASE CONFIG
+    ============================================================
+  */
+
+  const SUPABASE_URL =
+    "https://oernwkopdfbdetlqqsyc.supabase.co";
+
+  const SUPABASE_KEY =
+    "sb_publishable_U_dcJJBqAtuorC-O-0YpuQ_dIQfsVSi";
+
+  const { createClient } = window.supabase;
+
+  const supabaseClient = createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+
+  /*
+    ============================================================
+    STATE
+    ============================================================
+  */
+
+  let currentUser = null;
+  let currentProfile = null;
+  let currentConversation = null;
+
+
+  /*
+    ============================================================
+    ELEMENTS
+    ============================================================
+  */
+
+  const authScreen = document.getElementById("authScreen");
+  const app = document.getElementById("app");
+
+  const authForm = document.getElementById("authForm");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+
+  const authButton = document.getElementById("authButton");
+  const authMessage = document.getElementById("authMessage");
+
+  const loginTab = document.getElementById("loginTab");
+  const signupTab = document.getElementById("signupTab");
+
+  let authMode = "login";
+
+
+  /*
+    ============================================================
+    AUTH TABS
+    ============================================================
+  */
+
+  loginTab.onclick = () => {
+    authMode = "login";
+
+    loginTab.classList.add("active");
+    signupTab.classList.remove("active");
+
+    authButton.textContent = "Log in";
+    authMessage.textContent = "";
+  };
+
+  signupTab.onclick = () => {
+    authMode = "signup";
+
+    signupTab.classList.add("active");
+    loginTab.classList.remove("active");
+
+    authButton.textContent = "Create account";
+    authMessage.textContent = "";
+  };
+
+
+  /*
+    ============================================================
+    AUTH
+    ============================================================
+  */
+
+  authForm.addEventListener("submit", async (event) => {
+
+    event.preventDefault();
+
+    authButton.disabled = true;
+    authMessage.textContent = "Please wait...";
+
+    const email = emailInput.value.trim();
+    const password = passwordInput.value;
+
+    let result;
+
+    if (authMode === "login") {
+
+      result = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+    } else {
+
+      result = await supabaseClient.auth.signUp({
+        email,
+        password
+      });
+
+    }
+
+    if (result.error) {
+
+      authMessage.textContent = result.error.message;
+      authButton.disabled = false;
+      return;
+
+    }
+
+    if (authMode === "signup" && !result.data.session) {
+
+      authMessage.textContent =
+        "Account created! Check your email to confirm it.";
+
+      authButton.disabled = false;
+      return;
+
+    }
+
+    authMessage.textContent = "";
+    authButton.disabled = false;
+
+  });
+
+
+  /*
+    ============================================================
+    AUTH STATE
+    ============================================================
+  */
+
+  supabaseClient.auth.onAuthStateChange(async (event, session) => {
+
+    if (session?.user) {
+
+      currentUser = session.user;
+
+      authScreen.classList.add("hidden");
+      app.classList.remove("hidden");
+
+      await loadProfile();
+      await loadConversations();
+
+    } else {
+
+      currentUser = null;
+      currentProfile = null;
+
+      authScreen.classList.remove("hidden");
+      app.classList.add("hidden");
+
+    }
+
+  });
+
+
+  /*
+    ============================================================
+    LOAD PROFILE
+    ============================================================
+  */
+
+  async function loadProfile() {
+
+    if (!currentUser) return;
+
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .select("*")
+      .eq("id", currentUser.id)
+      .maybeSingle();
+
+    if (error) {
+      console.error(error);
+      return;
+    }
+
+    currentProfile = data;
+
+    if (!data) {
+
+      const username =
+        currentUser.email
+          ?.split("@")[0]
+          ?.replace(/[^a-zA-Z0-9_]/g, "")
+          .slice(0, 20)
+        || "user";
+
+      const { data: createdProfile, error: createError } =
+        await supabaseClient
+          .from("profiles")
+          .insert({
+            id: currentUser.id,
+            username: username,
+            display_name: username
+          })
+          .select()
+          .single();
+
+      if (createError) {
+        console.error(createError);
+        return;
+      }
+
+      currentProfile = createdProfile;
+    }
+
+    updateProfileUI();
+
+  }
+
+
+  /*
+    ============================================================
+    PROFILE UI
+    ============================================================
+  */
+
+  function getInitials(name) {
+
+    if (!name) return "N";
+
+    return name
+      .split(" ")
+      .map(word => word[0])
+      .join("")
+      .slice(0, 2)
+      .toUpperCase();
+
+  }
+
+  function updateProfileUI() {
+
+    if (!currentProfile) return;
+
+    const displayName =
+      currentProfile.display_name ||
+      currentProfile.username ||
+      "Nomi user";
+
+    const username =
+      currentProfile.username ||
+      "";
+
+    const initials = getInitials(displayName);
+
+    document.getElementById("accountName").textContent =
+      displayName;
+
+    document.getElementById("accountEmail").textContent =
+      currentUser.email || "";
+
+    document.getElementById("homeName").textContent =
+      displayName;
+
+    document.getElementById("homeEmail").textContent =
+      currentUser.email || "";
+
+    document.getElementById("welcomeTitle").textContent =
+      `Welcome, ${displayName} ⚡`;
+
+    document.getElementById("homeAvatar").textContent =
+      initials;
+
+    document.getElementById("profileAvatar").textContent =
+      initials;
+
+    document.getElementById("sideAvatar").textContent =
+      initials;
+
+    document.getElementById("sideName").textContent =
+      displayName;
+
+    document.getElementById("sideUsername").textContent =
+      username ? `@${username}` : "";
+
+    document.getElementById("usernameInput").value =
+      username;
+
+    document.getElementById("displayNameInput").value =
+      currentProfile.display_name || "";
+
+  }
+
+
+  /*
+    ============================================================
+    SAVE PROFILE
+    ============================================================
+  */
+
+  document.getElementById("saveProfile").onclick =
+    async () => {
+
+      const username =
+        document.getElementById("usernameInput")
+          .value.trim();
+
+      const displayName =
+        document.getElementById("displayNameInput")
+          .value.trim();
+
+      const message =
+        document.getElementById("profileMessage");
+
+      if (!username) {
+
+        message.textContent =
+          "Username cannot be empty.";
+
+        return;
+
+      }
+
+      const { data, error } =
+        await supabaseClient
+          .from("profiles")
+          .update({
+            username,
+            display_name: displayName || username
+          })
+          .eq("id", currentUser.id)
+          .select()
+          .single();
+
+      if (error) {
+
+        message.textContent = error.message;
+        return;
+
+      }
+
+      currentProfile = data;
+
+      updateProfileUI();
+
+      message.textContent = "Profile saved!";
+
+    };
+
+
+  /*
+    ============================================================
+    NAVIGATION
+    ============================================================
+  */
+
+  document.querySelectorAll(".nav button").forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const page = button.dataset.page;
+
+      document.querySelectorAll(".nav button")
+        .forEach(b => b.classList.remove("active"));
+
+      button.classList.add("active");
+
+      document.getElementById("homePage")
+        .classList.add("hidden");
+
+      document.getElementById("messagesPage")
+        .classList.add("hidden");
+
+      document.getElementById("peoplePage")
+        .classList.add("hidden");
+
+      document.getElementById("profilePage")
+        .classList.add("hidden");
+
+      if (page === "home") {
+
+        document.getElementById("homePage")
+          .classList.remove("hidden");
+
+        document.getElementById("pageTitle")
+          .textContent = "Home";
+
+      }
+
+      if (page === "messages") {
+
+        document.getElementById("messagesPage")
+          .classList.remove("hidden");
+
+        document.getElementById("pageTitle")
+          .textContent = "Messages";
+
+      }
+
+      if (page === "people") {
+
+        document.getElementById("peoplePage")
+          .classList.remove("hidden");
+
+        document.getElementById("pageTitle")
+          .textContent = "People";
+
+      }
+
+      if (page === "profile") {
+
+        document.getElementById("profilePage")
+          .classList.remove("hidden");
+
+        document.getElementById("pageTitle")
+          .textContent = "Profile";
+
+      }
+
+    });
+
+  });
+
+
+  /*
+    ============================================================
+    LOGOUT
+    ============================================================
+  */
+
+  document.getElementById("logoutButton").onclick =
+    async () => {
+
+      await supabaseClient.auth.signOut();
+
+    };
+
+
+  /*
+    ============================================================
+    PEOPLE SEARCH
+    ============================================================
+  */
+
+  const peopleSearch =
+    document.getElementById("peopleSearch");
+
+  peopleSearch.addEventListener("input",
+    async () => {
+
+      const query =
+        peopleSearch.value.trim();
+
+      const results =
+        document.getElementById("peopleResults");
+
+      if (!query) {
+
+        results.innerHTML = "";
+        return;
+
+      }
+
+      const { data, error } =
+        await supabaseClient
+          .from("profiles")
+          .select("id, username, display_name")
+          .ilike("username", `%${query}%`)
+          .neq("id", currentUser.id)
+          .limit(20);
+
+      if (error) {
+
+        results.innerHTML =
+          `<p style="color:#8993b0">${escapeHTML(error.message)}</p>`;
+
+        return;
+
+      }
+
+      if (!data.length) {
+
+        results.innerHTML =
+          `<p style="color:#8993b0">No users found.</p>`;
+
+        return;
+
+      }
+
+      results.innerHTML = data.map(user => `
+
+        <div class="profile-card" style="margin-bottom:10px; display:flex; align-items:center; gap:12px">
+
+          <div class="avatar" style="margin:0; width:45px; height:45px; font-size:15px">
+            ${escapeHTML(getInitials(user.display_name || user.username))}
+          </div>
+
+          <div style="flex:1">
+            <strong>${escapeHTML(user.display_name || user.username)}</strong>
+            <p>@${escapeHTML(user.username || "")}</p>
+          </div>
+
+          <button
+            class="send"
+            style="padding:9px 12px"
+            onclick="startConversation('${user.id}')">
+            Message
+          </button>
+
+        </div>
+
+      `).join("");
+
+    });
+
+
+  /*
+    ============================================================
+    CONVERSATIONS
+    ============================================================
+  */
+
+  async function loadConversations() {
+
+    const list =
+      document.getElementById("conversationList");
+
+    const { data, error } =
+      await supabaseClient
+        .from("conversation_members")
+        .select(`
+          conversation_id,
+          conversations (
+            id,
+            created_at
+          )
+        `)
+        .eq("user_id", currentUser.id);
+
+    if (error) {
+
+      console.error(error);
+
+      list.innerHTML = `
+        <div class="conversation">
+          <strong>No conversations yet</strong>
+          <span>Start one from People.</span>
+        </div>
+      `;
+
+      return;
+
+    }
+
+    if (!data?.length) {
+
+      list.innerHTML = `
+        <div class="conversation">
+          <strong>No conversations yet</strong>
+          <span>Find someone in People to message.</span>
+        </div>
+      `;
+
+      return;
+
+    }
+
+    list.innerHTML = "";
+
+    for (const item of data) {
+
+      const conversation =
+        document.createElement("div");
+
+      conversation.className = "conversation";
+
+      conversation.innerHTML = `
+        <strong>Conversation</strong>
+        <span>Tap to open</span>
+      `;
+
+      conversation.onclick =
+        () => openConversation(item.conversation_id);
+
+      list.appendChild(conversation);
+
+    }
+
+  }
+
+
+  /*
+    ============================================================
+    START CONVERSATION
+    ============================================================
+  */
+
+  window.startConversation =
+    async function(otherUserId) {
+
+      if (!currentUser) return;
+
+      /*
+        Check whether a conversation already exists
+        between these two users.
+      */
+
+      const { data: myMemberships } =
+        await supabaseClient
+          .from("conversation_members")
+          .select("conversation_id")
+          .eq("user_id", currentUser.id);
+
+      if (myMemberships?.length) {
+
+        const conversationIds =
+          myMemberships.map(x => x.conversation_id);
+
+        const { data: existing } =
+          await supabaseClient
+            .from("conversation_members")
+            .select("conversation_id")
+            .eq("user_id", otherUserId)
+            .in("conversation_id", conversationIds)
+            .limit(1);
+
+        if (existing?.length) {
+
+          await openConversation(
+            existing[0].conversation_id
+          );
+
+          return;
+
+        }
+
+      }
+
+      /*
+        Create conversation.
+      */
+
+      const { data: conversation, error } =
+        await supabaseClient
+          .from("conversations")
+          .insert({})
+          .select()
+          .single();
+
+      if (error) {
+
+        alert(error.message);
+        return;
+
+      }
+
+      /*
+        Add both members.
+      */
+
+      const { error: memberError } =
+        await supabaseClient
+          .from("conversation_members")
+          .insert([
+            {
+              conversation_id: conversation.id,
+              user_id: currentUser.id
+            },
+            {
+              conversation_id: conversation.id,
+              user_id: otherUserId
+            }
+          ]);
+
+      if (memberError) {
+
+        alert(memberError.message);
+        return;
+
+      }
+
+      await loadConversations();
+
+      await openConversation(conversation.id);
+
+      /*
+        Switch to messages.
+      */
+
+      document.querySelector('[data-page="messages"]')
+        .click();
+
+    };
+
+
+  /*
+    ============================================================
+    OPEN CONVERSATION
+    ============================================================
+  */
+
+  async function openConversation(conversationId) {
+
+    currentConversation = conversationId;
+
+    document.getElementById("chatTitle")
+      .textContent = "Conversation";
+
+    document.getElementById("messageInput")
+      .disabled = false;
+
+    document.querySelector(".send")
+      .disabled = false;
+
+    await loadMessages();
+
+    /*
+      Subscribe to new messages.
+    */
+
+    subscribeToMessages();
+
+  }
+
+
+  /*
+    ============================================================
+    LOAD MESSAGES
+    ============================================================
+  */
+
+  async function loadMessages() {
+
+    const container =
+      document.getElementById("messages");
+
+    const { data, error } =
+      await supabaseClient
+        .from("messages")
+        .select("*")
+        .eq("conversation_id", currentConversation)
+        .order("created_at", {
+          ascending: true
+        });
+
+    if (error) {
+
+      console.error(error);
+
+      container.innerHTML =
+        `<div class="empty-chat">Unable to load messages.</div>`;
+
+      return;
+
+    }
+
+    if (!data.length) {
+
+      container.innerHTML =
+        `<div class="empty-chat">No messages yet. Say hello! ⚡</div>`;
+
+      return;
+
+    }
+
+    container.innerHTML = "";
+
+    data.forEach(renderMessage);
+
+    container.scrollTop =
+      container.scrollHeight;
+
+  }
+
+
+  /*
+    ============================================================
+    RENDER MESSAGE
+    ============================================================
+  */
+
+  function renderMessage(message) {
+
+    const container =
+      document.getElementById("messages");
+
+    const bubble =
+      document.createElement("div");
+
+    bubble.className =
+      "bubble" +
+      (message.sender_id === currentUser.id
+        ? " mine"
+        : "");
+
+    bubble.innerHTML = `
+      ${escapeHTML(message.content || "")}
+      <span class="bubble-time">
+        ${formatTime(message.created_at)}
+      </span>
+    `;
+
+    container.appendChild(bubble);
+
+  }
+
+
+  /*
+    ============================================================
+    SEND MESSAGE
+    ============================================================
+  */
+
+  document.getElementById("messageForm")
+    .addEventListener("submit",
+      async event => {
+
+        event.preventDefault();
+
+        if (!currentConversation) return;
+
+        const input =
+          document.getElementById("messageInput");
+
+        const content =
+          input.value.trim();
+
+        if (!content) return;
+
+        input.disabled = true;
+
+        const { error } =
+          await supabaseClient
+            .from("messages")
+            .insert({
+              conversation_id:
+                currentConversation,
+
+              sender_id:
+                currentUser.id,
+
+              content
+            });
+
+        if (error) {
+
+          alert(error.message);
+
+        } else {
+
+          input.value = "";
+
+        }
+
+        input.disabled = false;
+        input.focus();
+
+      });
+
+
+  /*
+    ============================================================
+    REALTIME
+    ============================================================
+  */
+
+  let messageChannel = null;
+
+  function subscribeToMessages() {
+
+    if (messageChannel) {
+
+      supabaseClient
+        .removeChannel(messageChannel);
+
+    }
+
+    if (!currentConversation) return;
+
+    messageChannel =
+      supabaseClient
+        .channel(
+          `messages-${currentConversation}`
+        )
+        .on(
+          "postgres_changes",
+          {
+            event: "INSERT",
+            schema: "public",
+            table: "messages",
+            filter:
+              `conversation_id=eq.${currentConversation}`
+          },
+          payload => {
+
+            const container =
+              document.getElementById("messages");
+
+            if (
+              container.querySelector(".empty-chat")
+            ) {
+              container.innerHTML = "";
+            }
+
+            renderMessage(payload.new);
+
+            container.scrollTop =
+              container.scrollHeight;
+
+          }
+        )
+        .subscribe();
+
+  }
+
+
+  /*
+    ============================================================
+    HELPERS
+    ============================================================
+  */
+
+  function escapeHTML(value) {
+
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
+
+  function formatTime(timestamp) {
+
+    if (!timestamp) return "";
+
+    return new Date(timestamp)
+      .toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+
+  }
+
+
+  /*
+    ============================================================
+    INITIAL SESSION CHECK
+    ============================================================
+  */
+
+  (async () => {
+
+    const { data } =
+      await supabaseClient.auth.getSession();
+
+    if (data.session?.user) {
+
+      currentUser =
+        data.session.user;
+
+      authScreen.classList.add("hidden");
+      app.classList.remove("hidden");
+
+      await loadProfile();
+      await loadConversations();
+
+    }
+
+  })();
+
+</script>
+
+</body>
+</html>
+
