@@ -25,6 +25,7 @@
       --purple2: #7045d8;
       --blue: #456cff;
       --danger: #ff5f72;
+      --success: #5bd68a;
     }
 
     body {
@@ -286,6 +287,108 @@
       color: #cbd0e2;
     }
 
+    /* AVATARS */
+
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 21px;
+      margin-bottom: 12px;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .small-avatar {
+      width: 36px;
+      height: 36px;
+      margin: 0;
+      font-size: 13px;
+    }
+
+    .message-avatar {
+      width: 34px;
+      height: 34px;
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .verified {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 17px;
+      height: 17px;
+      border-radius: 50%;
+      background: #7b5cff;
+      color: white;
+      font-size: 10px;
+      font-weight: 900;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+
+    /* PROFILE */
+
+    .profile-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .profile-card h3 {
+      margin-bottom: 4px;
+    }
+
+    .profile-card p {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 13px;
+      color: #9ca6c2;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    .avatar-upload {
+      margin-bottom: 20px;
+    }
+
+    .avatar-upload button {
+      border: 1px solid var(--border);
+      background: var(--panel2);
+      color: white;
+      padding: 9px 13px;
+      border-radius: 9px;
+    }
+
+    .avatar-upload input {
+      display: none;
+    }
+
     /* CHAT */
 
     .chat-layout {
@@ -315,10 +418,12 @@
     }
 
     .conversation {
-      padding: 14px;
+      padding: 13px;
       border-bottom: 1px solid rgba(32,43,74,.55);
       cursor: pointer;
-      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
     .conversation:hover,
@@ -326,10 +431,17 @@
       background: var(--panel2);
     }
 
+    .conversation-info {
+      min-width: 0;
+      flex: 1;
+    }
+
     .conversation strong {
       display: block;
       font-size: 14px;
-      padding-right: 35px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .conversation span {
@@ -339,19 +451,18 @@
       margin-top: 4px;
     }
 
-    .rename-conversation {
-      position: absolute;
-      right: 10px;
-      top: 12px;
+    .conversation-delete {
       border: 0;
       background: transparent;
       color: var(--muted);
-      font-size: 14px;
-      padding: 4px;
+      font-size: 17px;
+      padding: 5px;
+      border-radius: 7px;
     }
 
-    .rename-conversation:hover {
-      color: white;
+    .conversation-delete:hover {
+      color: var(--danger);
+      background: rgba(255,95,114,.1);
     }
 
     .chat {
@@ -367,36 +478,30 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
+      gap: 10px;
     }
 
     .chat-header-info {
       min-width: 0;
     }
 
-    .chat-header-title {
-      font-size: 16px;
+    .chat-header-name {
+      font-weight: 700;
     }
 
-    .chat-header-subtitle {
+    .chat-header-username {
       color: var(--muted);
       font-size: 12px;
       margin-top: 2px;
-      font-weight: 400;
     }
 
-    .rename-header-button {
+    .rename-button {
       border: 1px solid var(--border);
       background: var(--panel2);
-      color: #cbd0e2;
-      border-radius: 9px;
-      padding: 7px 10px;
-      font-size: 12px;
-    }
-
-    .rename-header-button:hover {
       color: white;
-      border-color: var(--purple);
+      padding: 7px 10px;
+      border-radius: 8px;
+      font-size: 12px;
     }
 
     #messages {
@@ -416,42 +521,32 @@
 
     .message-row {
       display: flex;
-      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
       max-width: 75%;
-      align-self: flex-start;
     }
 
     .message-row.mine {
       align-self: flex-end;
-      align-items: flex-end;
+      flex-direction: row-reverse;
     }
 
-    .message-author {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      margin: 0 7px 4px;
-      font-size: 12px;
-      color: #cbd0e2;
-      font-weight: 700;
+    .message-content {
+      min-width: 0;
     }
 
-    .verified-badge {
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: #9b6cff;
-      color: white;
-      font-size: 9px;
-      font-weight: 900;
-      box-shadow: 0 0 8px rgba(155,108,255,.45);
+    .sender-name {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0 0 4px 4px;
+    }
+
+    .message-row.mine .sender-name {
+      text-align: right;
+      margin-right: 4px;
     }
 
     .bubble {
-      max-width: 100%;
       padding: 10px 13px;
       border-radius: 14px;
       background: var(--panel2);
@@ -459,7 +554,7 @@
       word-wrap: break-word;
     }
 
-    .bubble.mine {
+    .message-row.mine .bubble {
       background: linear-gradient(135deg, #7650dd, #5141a9);
     }
 
@@ -496,128 +591,45 @@
       font-weight: 700;
     }
 
-    /* PROFILE */
+    /* PEOPLE */
+
+    .person-card {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .person-card .avatar {
+      margin: 0;
+      width: 45px;
+      height: 45px;
+      font-size: 15px;
+    }
+
+    .person-info {
+      flex: 1;
+    }
+
+    .person-info p {
+      margin-top: 2px;
+    }
+
+    .message-person {
+      border: 0;
+      border-radius: 9px;
+      padding: 9px 12px;
+      background: var(--purple);
+      color: white;
+      font-weight: 700;
+    }
+
+    /* RIGHT */
 
     .right-panel {
       border-left: 1px solid var(--border);
       background: #090e20;
       padding: 22px;
-    }
-
-    .profile-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .avatar {
-      width: 58px;
-      height: 58px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 800;
-      font-size: 21px;
-      margin-bottom: 12px;
-    }
-
-    .profile-card h3 {
-      margin-bottom: 4px;
-    }
-
-    .profile-card p {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .status {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 13px;
-      color: #9ca6c2;
-      font-size: 12px;
-    }
-
-    .status-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #5bd68a;
-    }
-
-    /* PEOPLE */
-
-    .person-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 15px;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    /* MODAL */
-
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,.65);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      z-index: 100;
-    }
-
-    .modal {
-      width: 100%;
-      max-width: 400px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: 0 25px 80px rgba(0,0,0,.5);
-    }
-
-    .modal h3 {
-      margin-bottom: 7px;
-    }
-
-    .modal p {
-      color: var(--muted);
-      font-size: 13px;
-      margin-bottom: 18px;
-    }
-
-    .modal-actions {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-    }
-
-    .modal-actions button {
-      flex: 1;
-      padding: 11px;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-    }
-
-    .cancel-button {
-      background: var(--panel2);
-      color: #cbd0e2;
-    }
-
-    .save-button {
-      background: var(--purple);
-      color: white;
-      border: 0 !important;
-      font-weight: 700;
     }
 
     /* RESPONSIVE */
@@ -694,16 +706,17 @@
       .bubble {
         max-width: 85%;
       }
+
+      .message-row {
+        max-width: 90%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-<!-- AUTH -->
-
 <section id="authScreen">
-
   <div class="auth-card">
 
     <div class="logo">
@@ -716,59 +729,35 @@
     </p>
 
     <div class="tabs">
-      <button class="tab active" id="loginTab">
-        Log in
-      </button>
-
-      <button class="tab" id="signupTab">
-        Sign up
-      </button>
+      <button class="tab active" id="loginTab">Log in</button>
+      <button class="tab" id="signupTab">Sign up</button>
     </div>
 
     <form id="authForm">
 
       <div class="field">
         <label>Email</label>
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          required
-        >
+        <input id="email" type="email" autocomplete="email" required>
       </div>
 
       <div class="field">
         <label>Password</label>
-        <input
-          id="password"
-          type="password"
-          autocomplete="current-password"
-          required
-        >
+        <input id="password" type="password"
+          autocomplete="current-password" required>
       </div>
 
-      <button
-        class="primary"
-        id="authButton"
-        type="submit"
-      >
+      <button class="primary" id="authButton" type="submit">
         Log in
       </button>
 
       <div class="message" id="authMessage"></div>
 
     </form>
-
   </div>
-
 </section>
 
 
-<!-- APP -->
-
 <section id="app" class="hidden">
-
-  <!-- SIDEBAR -->
 
   <aside class="sidebar">
 
@@ -778,73 +767,37 @@
     </div>
 
     <nav class="nav">
-
-      <button class="active" data-page="home">
-        ⌂ <span>Home</span>
-      </button>
-
-      <button data-page="messages">
-        ▣ <span>Messages</span>
-      </button>
-
-      <button data-page="people">
-        ◎ <span>People</span>
-      </button>
-
-      <button data-page="profile">
-        ◉ <span>Profile</span>
-      </button>
-
+      <button class="active" data-page="home">⌂ <span>Home</span></button>
+      <button data-page="messages">▣ <span>Messages</span></button>
+      <button data-page="people">◎ <span>People</span></button>
+      <button data-page="profile">◉ <span>Profile</span></button>
     </nav>
 
     <div class="account">
-
-      <div
-        class="account-name"
-        id="accountName"
-      >
+      <div class="account-name" id="accountName">
         Loading...
       </div>
-
-      <div
-        class="account-email"
-        id="accountEmail"
-      ></div>
-
-      <button
-        class="logout"
-        id="logoutButton"
-      >
+      <div class="account-email" id="accountEmail"></div>
+      <button class="logout" id="logoutButton">
         Log out
       </button>
-
     </div>
 
   </aside>
 
 
-  <!-- MAIN -->
-
   <main class="main">
 
     <header class="topbar">
-
-      <h2 id="pageTitle">
-        Home
-      </h2>
-
+      <h2 id="pageTitle">Home</h2>
     </header>
 
 
     <!-- HOME -->
 
-    <div
-      class="content"
-      id="homePage"
-    >
+    <div class="content" id="homePage">
 
       <div class="welcome">
-
         <h1 id="welcomeTitle">
           Welcome to Nomi ⚡
         </h1>
@@ -852,7 +805,6 @@
         <p>
           Message friends, start conversations and stay connected.
         </p>
-
       </div>
 
       <div class="section-title">
@@ -861,16 +813,11 @@
 
       <div class="profile-card">
 
-        <div
-          class="avatar"
-          id="homeAvatar"
-        >
-          N
-        </div>
+        <div class="avatar" id="homeAvatar">N</div>
 
-        <h3 id="homeName">
-          Loading...
-        </h3>
+        <h3 id="homeName">Loading...</h3>
+
+        <p id="homeUsername"></p>
 
         <p id="homeEmail"></p>
 
@@ -886,67 +833,45 @@
 
     <!-- MESSAGES -->
 
-    <div
-      id="messagesPage"
-      class="chat-layout hidden"
-    >
+    <div id="messagesPage" class="chat-layout hidden">
 
       <aside class="conversation-list">
 
         <div class="conversation-search">
-
           <input
             id="conversationSearch"
             placeholder="Search conversations..."
           >
-
         </div>
 
-        <div id="conversationList">
-
-          <div class="conversation">
-
-            <strong>
-              No conversations yet
-            </strong>
-
-            <span>
-              Start one from People.
-            </span>
-
-          </div>
-
-        </div>
+        <div id="conversationList"></div>
 
       </aside>
 
 
       <section class="chat">
 
-        <div
-          class="chat-header"
-          id="chatTitle"
-        >
+        <div class="chat-header">
 
           <div class="chat-header-info">
 
             <div
-              class="chat-header-title"
-              id="chatTitleText"
+              class="chat-header-name"
+              id="chatTitle"
             >
               Select a conversation
             </div>
 
             <div
-              class="chat-header-subtitle"
+              class="chat-header-username"
               id="chatSubtitle"
             ></div>
 
           </div>
 
           <button
-            class="rename-header-button hidden"
-            id="renameHeaderButton"
+            class="rename-button hidden"
+            id="renameConversationButton"
           >
             Rename
           </button>
@@ -963,10 +888,7 @@
         </div>
 
 
-        <form
-          class="composer"
-          id="messageForm"
-        >
+        <form class="composer" id="messageForm">
 
           <input
             id="messageInput"
@@ -992,28 +914,18 @@
 
     <!-- PEOPLE -->
 
-    <div
-      class="content hidden"
-      id="peoplePage"
-    >
+    <div class="content hidden" id="peoplePage">
 
       <div class="welcome">
-
         <h1>People</h1>
-
-        <p>
-          Find people on Nomi.
-        </p>
-
+        <p>Find people on Nomi.</p>
       </div>
 
       <div class="field">
-
         <input
           id="peopleSearch"
           placeholder="Search by username..."
         >
-
       </div>
 
       <div id="peopleResults"></div>
@@ -1023,67 +935,56 @@
 
     <!-- PROFILE -->
 
-    <div
-      class="content hidden"
-      id="profilePage"
-    >
+    <div class="content hidden" id="profilePage">
 
       <div class="welcome">
-
         <h1>Your profile</h1>
-
-        <p>
-          Manage your Nomi profile.
-        </p>
-
+        <p>Manage your Nomi profile.</p>
       </div>
 
       <div class="profile-card">
 
-        <div
-          class="avatar"
-          id="profileAvatar"
-        >
+        <div class="avatar" id="profileAvatar">
           N
         </div>
 
-        <div class="field">
+        <div class="avatar-upload">
 
           <label>
-            Username
-          </label>
+            <input
+              id="avatarInput"
+              type="file"
+              accept="image/png,image/jpeg,image/webp,image/gif"
+            >
 
-          <input
-            id="usernameInput"
-            maxlength="30"
-          >
+            <button
+              type="button"
+              onclick="document.getElementById('avatarInput').click()"
+            >
+              Change profile picture
+            </button>
+          </label>
 
         </div>
 
+
         <div class="field">
-
-          <label>
-            Display name
-          </label>
-
-          <input
-            id="displayNameInput"
-            maxlength="50"
-          >
-
+          <label>Username</label>
+          <input id="usernameInput" maxlength="30">
         </div>
 
-        <button
-          class="primary"
-          id="saveProfile"
-        >
+
+        <div class="field">
+          <label>Display name</label>
+          <input id="displayNameInput" maxlength="50">
+        </div>
+
+
+        <button class="primary" id="saveProfile">
           Save profile
         </button>
 
-        <div
-          class="message"
-          id="profileMessage"
-        ></div>
+        <div class="message" id="profileMessage"></div>
 
       </div>
 
@@ -1091,8 +992,6 @@
 
   </main>
 
-
-  <!-- RIGHT PANEL -->
 
   <aside class="right-panel">
 
@@ -1102,10 +1001,7 @@
 
     <div class="profile-card">
 
-      <div
-        class="avatar"
-        id="sideAvatar"
-      >
+      <div class="avatar" id="sideAvatar">
         N
       </div>
 
@@ -1116,11 +1012,8 @@
       <p id="sideUsername"></p>
 
       <div class="status">
-
         <span class="status-dot"></span>
-
         Online
-
       </div>
 
     </div>
@@ -1130,72 +1023,11 @@
 </section>
 
 
-<!-- RENAME MODAL -->
-
-<div
-  class="modal-overlay hidden"
-  id="renameModal"
->
-
-  <div class="modal">
-
-    <h3>
-      Rename conversation
-    </h3>
-
-    <p>
-      Give this conversation a name.
-    </p>
-
-    <div class="field">
-
-      <label>
-        Conversation name
-      </label>
-
-      <input
-        id="conversationNameInput"
-        maxlength="80"
-        placeholder="e.g. Friends"
-      >
-
-    </div>
-
-    <div class="modal-actions">
-
-      <button
-        class="cancel-button"
-        id="cancelRename"
-      >
-        Cancel
-      </button>
-
-      <button
-        class="save-button"
-        id="saveRename"
-      >
-        Save
-      </button>
-
-    </div>
-
-    <div
-      class="message"
-      id="renameMessage"
-    ></div>
-
-  </div>
-
-</div>
-
-
 <script>
 
-  /*
-  ============================================================
-  SUPABASE
-  ============================================================
-  */
+  /* ============================================================
+     SUPABASE
+  ============================================================ */
 
   const SUPABASE_URL =
     "https://oernwkopdfbdetlqqsyc.supabase.co";
@@ -1206,35 +1038,23 @@
   const { createClient } = window.supabase;
 
   const supabaseClient =
-    createClient(
-      SUPABASE_URL,
-      SUPABASE_KEY
-    );
+    createClient(SUPABASE_URL, SUPABASE_KEY);
 
 
-  /*
-  ============================================================
-  STATE
-  ============================================================
-  */
+  /* ============================================================
+     STATE
+  ============================================================ */
 
   let currentUser = null;
   let currentProfile = null;
   let currentConversation = null;
   let currentConversationName = null;
-
   let messageChannel = null;
 
-  let conversationProfiles = {};
 
-  let authMode = "login";
-
-
-  /*
-  ============================================================
-  ELEMENTS
-  ============================================================
-  */
+  /* ============================================================
+     AUTH ELEMENTS
+  ============================================================ */
 
   const authScreen =
     document.getElementById("authScreen");
@@ -1263,12 +1083,12 @@
   const signupTab =
     document.getElementById("signupTab");
 
+  let authMode = "login";
 
-  /*
-  ============================================================
-  AUTH TABS
-  ============================================================
-  */
+
+  /* ============================================================
+     AUTH TABS
+  ============================================================ */
 
   loginTab.onclick = () => {
 
@@ -1277,9 +1097,7 @@
     loginTab.classList.add("active");
     signupTab.classList.remove("active");
 
-    authButton.textContent =
-      "Log in";
-
+    authButton.textContent = "Log in";
     authMessage.textContent = "";
 
   };
@@ -1292,120 +1110,102 @@
     signupTab.classList.add("active");
     loginTab.classList.remove("active");
 
-    authButton.textContent =
-      "Create account";
-
+    authButton.textContent = "Create account";
     authMessage.textContent = "";
 
   };
 
 
-  /*
-  ============================================================
-  AUTH
-  ============================================================
-  */
+  /* ============================================================
+     AUTH
+  ============================================================ */
 
-  authForm.addEventListener(
-    "submit",
-    async event => {
+  authForm.addEventListener("submit", async event => {
 
-      event.preventDefault();
+    event.preventDefault();
 
-      authButton.disabled = true;
+    authButton.disabled = true;
+    authMessage.textContent = "Please wait...";
 
-      authMessage.textContent =
-        "Please wait...";
+    const email =
+      emailInput.value.trim();
 
-      const email =
-        emailInput.value.trim();
+    const password =
+      passwordInput.value;
 
-      const password =
-        passwordInput.value;
+    let result;
 
-      let result;
+    if (authMode === "login") {
 
-      if (authMode === "login") {
+      result =
+        await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
 
-        result =
-          await supabaseClient.auth.signInWithPassword({
-            email,
-            password
-          });
+    } else {
 
-      } else {
-
-        result =
-          await supabaseClient.auth.signUp({
-            email,
-            password
-          });
-
-      }
-
-      if (result.error) {
-
-        authMessage.textContent =
-          result.error.message;
-
-        authButton.disabled = false;
-
-        return;
-      }
-
-      if (
-        authMode === "signup" &&
-        !result.data.session
-      ) {
-
-        authMessage.textContent =
-          "Account created! Check your email to confirm it.";
-
-        authButton.disabled = false;
-
-        return;
-      }
-
-      authMessage.textContent = "";
-
-      authButton.disabled = false;
+      result =
+        await supabaseClient.auth.signUp({
+          email,
+          password
+        });
 
     }
-  );
+
+    if (result.error) {
+
+      authMessage.textContent =
+        result.error.message;
+
+      authButton.disabled = false;
+      return;
+
+    }
+
+    if (
+      authMode === "signup" &&
+      !result.data.session
+    ) {
+
+      authMessage.textContent =
+        "Account created! Check your email to confirm it.";
+
+      authButton.disabled = false;
+      return;
+
+    }
+
+    authMessage.textContent = "";
+    authButton.disabled = false;
+
+  });
 
 
-  /*
-  ============================================================
-  AUTH STATE
-  ============================================================
-  */
+  /* ============================================================
+     AUTH STATE
+  ============================================================ */
 
   supabaseClient.auth.onAuthStateChange(
     async (event, session) => {
 
       if (session?.user) {
 
-        currentUser =
-          session.user;
+        currentUser = session.user;
 
         authScreen.classList.add("hidden");
-
         app.classList.remove("hidden");
 
         await loadProfile();
-
         await loadConversations();
 
       } else {
 
         currentUser = null;
-
         currentProfile = null;
-
         currentConversation = null;
 
         authScreen.classList.remove("hidden");
-
         app.classList.add("hidden");
 
       }
@@ -1414,20 +1214,15 @@
   );
 
 
-  /*
-  ============================================================
-  PROFILE
-  ============================================================
-  */
+  /* ============================================================
+     PROFILE
+  ============================================================ */
 
   async function loadProfile() {
 
     if (!currentUser) return;
 
-    const {
-      data,
-      error
-    } =
+    const { data, error } =
       await supabaseClient
         .from("profiles")
         .select("*")
@@ -1437,8 +1232,8 @@
     if (error) {
 
       console.error(error);
-
       return;
+
     }
 
     currentProfile = data;
@@ -1452,16 +1247,14 @@
           .slice(0, 20)
         || "user";
 
-      const {
-        data: createdProfile,
-        error: createError
-      } =
+      const { data: createdProfile, error: createError } =
         await supabaseClient
           .from("profiles")
           .insert({
             id: currentUser.id,
             username,
-            display_name: username
+            display_name: username,
+            avatar_url: null
           })
           .select()
           .single();
@@ -1469,62 +1262,18 @@
       if (createError) {
 
         console.error(createError);
-
         return;
+
       }
 
-      currentProfile =
-        createdProfile;
+      currentProfile = createdProfile;
+
     }
 
     updateProfileUI();
 
   }
 
-
-  /*
-  ============================================================
-  VERIFIED USER
-  ============================================================
-  */
-
-  function isVerifiedProfile(profile) {
-
-    return (
-      profile &&
-      String(profile.username || "")
-        .toLowerCase() ===
-      "nomiofficial"
-    );
-
-  }
-
-
-  function verifiedBadge(profile) {
-
-    if (!isVerifiedProfile(profile)) {
-
-      return "";
-
-    }
-
-    return `
-      <span
-        class="verified-badge"
-        title="Verified Nomi account"
-      >
-        ✓
-      </span>
-    `;
-
-  }
-
-
-  /*
-  ============================================================
-  PROFILE UI
-  ============================================================
-  */
 
   function getInitials(name) {
 
@@ -1540,6 +1289,73 @@
   }
 
 
+  function verifiedBadge(profile) {
+
+    if (!profile?.is_verified) {
+      return "";
+    }
+
+    return `<span class="verified" title="Verified">✓</span>`;
+
+  }
+
+
+  function avatarHTML(profile, extraClass = "") {
+
+    const initials =
+      getInitials(
+        profile?.display_name ||
+        profile?.username ||
+        "N"
+      );
+
+    if (profile?.avatar_url) {
+
+      return `
+        <div class="avatar ${extraClass}">
+          <img
+            src="${escapeHTML(profile.avatar_url)}"
+            alt=""
+          >
+        </div>
+      `;
+
+    }
+
+    return `
+      <div class="avatar ${extraClass}">
+        ${escapeHTML(initials)}
+      </div>
+    `;
+
+  }
+
+
+  function setAvatar(element, profile) {
+
+    if (!element) return;
+
+    const initials =
+      getInitials(
+        profile?.display_name ||
+        profile?.username ||
+        "N"
+      );
+
+    if (profile?.avatar_url) {
+
+      element.innerHTML =
+        `<img src="${escapeHTML(profile.avatar_url)}" alt="">`;
+
+    } else {
+
+      element.textContent = initials;
+
+    }
+
+  }
+
+
   function updateProfileUI() {
 
     if (!currentProfile) return;
@@ -1550,275 +1366,294 @@
       "Nomi user";
 
     const username =
-      currentProfile.username ||
-      "";
+      currentProfile.username || "";
 
-    const initials =
-      getInitials(displayName);
-
-    document.getElementById(
-      "accountName"
-    ).textContent =
-      displayName;
-
-    document.getElementById(
-      "accountEmail"
-    ).textContent =
-      currentUser.email || "";
-
-    document.getElementById(
-      "homeName"
-    ).textContent =
-      displayName;
-
-    document.getElementById(
-      "homeEmail"
-    ).textContent =
-      currentUser.email || "";
-
-    document.getElementById(
-      "welcomeTitle"
-    ).textContent =
-      `Welcome, ${displayName} ⚡`;
-
-    document.getElementById(
-      "homeAvatar"
-    ).textContent =
-      initials;
-
-    document.getElementById(
-      "profileAvatar"
-    ).textContent =
-      initials;
-
-    document.getElementById(
-      "sideAvatar"
-    ).textContent =
-      initials;
-
-    document.getElementById(
-      "sideName"
-    ).innerHTML =
-      escapeHTML(displayName) +
+    const badge =
       verifiedBadge(currentProfile);
 
-    document.getElementById(
-      "sideUsername"
-    ).textContent =
-      username
-        ? `@${username}`
-        : "";
+    document.getElementById("accountName").innerHTML =
+      escapeHTML(displayName) + badge;
 
-    document.getElementById(
-      "usernameInput"
-    ).value =
+    document.getElementById("accountEmail").textContent =
+      currentUser.email || "";
+
+    document.getElementById("homeName").innerHTML =
+      escapeHTML(displayName) + badge;
+
+    document.getElementById("homeUsername").textContent =
+      username ? `@${username}` : "";
+
+    document.getElementById("homeEmail").textContent =
+      currentUser.email || "";
+
+    document.getElementById("welcomeTitle").textContent =
+      `Welcome, ${displayName} ⚡`;
+
+    setAvatar(
+      document.getElementById("homeAvatar"),
+      currentProfile
+    );
+
+    setAvatar(
+      document.getElementById("profileAvatar"),
+      currentProfile
+    );
+
+    setAvatar(
+      document.getElementById("sideAvatar"),
+      currentProfile
+    );
+
+    document.getElementById("sideName").innerHTML =
+      escapeHTML(displayName) + badge;
+
+    document.getElementById("sideUsername").textContent =
+      username ? `@${username}` : "";
+
+    document.getElementById("usernameInput").value =
       username;
 
-    document.getElementById(
-      "displayNameInput"
-    ).value =
+    document.getElementById("displayNameInput").value =
       currentProfile.display_name || "";
 
   }
 
 
-  /*
-  ============================================================
-  SAVE PROFILE
-  ============================================================
-  */
+  /* ============================================================
+     AVATAR UPLOAD
+  ============================================================ */
 
-  document.getElementById(
-    "saveProfile"
-  ).onclick = async () => {
+  document
+    .getElementById("avatarInput")
+    .addEventListener("change", async event => {
 
-    const username =
-      document
-        .getElementById("usernameInput")
-        .value
-        .trim();
+      const file =
+        event.target.files[0];
 
-    const displayName =
-      document
-        .getElementById("displayNameInput")
-        .value
-        .trim();
+      if (!file || !currentUser) return;
 
-    const message =
-      document.getElementById(
-        "profileMessage"
-      );
+      const message =
+        document.getElementById("profileMessage");
 
-    if (!username) {
+      if (file.size > 5 * 1024 * 1024) {
+
+        message.textContent =
+          "That image is too large. Maximum size is 5MB.";
+
+        return;
+
+      }
 
       message.textContent =
-        "Username cannot be empty.";
+        "Uploading profile picture...";
 
-      return;
-    }
+      const extension =
+        file.name.split(".").pop().toLowerCase();
 
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("profiles")
-        .update({
-          username,
-          display_name:
-            displayName || username
-        })
-        .eq("id", currentUser.id)
-        .select()
-        .single();
+      const filePath =
+        `${currentUser.id}/avatar-${Date.now()}.${extension}`;
 
-    if (error) {
+      const { error: uploadError } =
+        await supabaseClient.storage
+          .from("avatars")
+          .upload(filePath, file, {
+            cacheControl: "3600",
+            upsert: false,
+            contentType: file.type
+          });
+
+      if (uploadError) {
+
+        message.textContent =
+          uploadError.message;
+
+        return;
+
+      }
+
+      const { data: publicData } =
+        supabaseClient.storage
+          .from("avatars")
+          .getPublicUrl(filePath);
+
+      const avatarUrl =
+        publicData.publicUrl;
+
+      const { data, error } =
+        await supabaseClient
+          .from("profiles")
+          .update({
+            avatar_url: avatarUrl
+          })
+          .eq("id", currentUser.id)
+          .select()
+          .single();
+
+      if (error) {
+
+        message.textContent =
+          error.message;
+
+        return;
+
+      }
+
+      currentProfile = data;
+
+      updateProfileUI();
 
       message.textContent =
-        error.message;
+        "Profile picture updated!";
 
-      return;
-    }
-
-    currentProfile = data;
-
-    updateProfileUI();
-
-    message.textContent =
-      "Profile saved!";
-
-  };
+    });
 
 
-  /*
-  ============================================================
-  NAVIGATION
-  ============================================================
-  */
+  /* ============================================================
+     SAVE PROFILE
+  ============================================================ */
+
+  document.getElementById("saveProfile").onclick =
+    async () => {
+
+      const username =
+        document
+          .getElementById("usernameInput")
+          .value
+          .trim();
+
+      const displayName =
+        document
+          .getElementById("displayNameInput")
+          .value
+          .trim();
+
+      const message =
+        document.getElementById("profileMessage");
+
+      if (!username) {
+
+        message.textContent =
+          "Username cannot be empty.";
+
+        return;
+
+      }
+
+      const { data, error } =
+        await supabaseClient
+          .from("profiles")
+          .update({
+            username,
+            display_name:
+              displayName || username
+          })
+          .eq("id", currentUser.id)
+          .select()
+          .single();
+
+      if (error) {
+
+        message.textContent =
+          error.message;
+
+        return;
+
+      }
+
+      currentProfile = data;
+
+      updateProfileUI();
+
+      message.textContent =
+        "Profile saved!";
+
+    };
+
+
+  /* ============================================================
+     NAVIGATION
+  ============================================================ */
 
   document
     .querySelectorAll(".nav button")
     .forEach(button => {
 
-      button.addEventListener(
-        "click",
-        () => {
+      button.addEventListener("click", () => {
 
-          const page =
-            button.dataset.page;
+        const page =
+          button.dataset.page;
+
+        document
+          .querySelectorAll(".nav button")
+          .forEach(b =>
+            b.classList.remove("active")
+          );
+
+        button.classList.add("active");
+
+        [
+          "homePage",
+          "messagesPage",
+          "peoplePage",
+          "profilePage"
+        ].forEach(id => {
 
           document
-            .querySelectorAll(".nav button")
-            .forEach(b =>
-              b.classList.remove("active")
-            );
-
-          button.classList.add("active");
-
-          document
-            .getElementById("homePage")
+            .getElementById(id)
             .classList.add("hidden");
 
-          document
-            .getElementById("messagesPage")
-            .classList.add("hidden");
+        });
 
-          document
-            .getElementById("peoplePage")
-            .classList.add("hidden");
+        const pageMap = {
+          home: ["homePage", "Home"],
+          messages: ["messagesPage", "Messages"],
+          people: ["peoplePage", "People"],
+          profile: ["profilePage", "Profile"]
+        };
 
-          document
-            .getElementById("profilePage")
-            .classList.add("hidden");
+        const [elementId, title] =
+          pageMap[page];
 
+        document
+          .getElementById(elementId)
+          .classList.remove("hidden");
 
-          if (page === "home") {
+        document
+          .getElementById("pageTitle")
+          .textContent = title;
 
-            document
-              .getElementById("homePage")
-              .classList.remove("hidden");
-
-            document
-              .getElementById("pageTitle")
-              .textContent =
-              "Home";
-
-          }
-
-
-          if (page === "messages") {
-
-            document
-              .getElementById("messagesPage")
-              .classList.remove("hidden");
-
-            document
-              .getElementById("pageTitle")
-              .textContent =
-              "Messages";
-
-          }
-
-
-          if (page === "people") {
-
-            document
-              .getElementById("peoplePage")
-              .classList.remove("hidden");
-
-            document
-              .getElementById("pageTitle")
-              .textContent =
-              "People";
-
-          }
-
-
-          if (page === "profile") {
-
-            document
-              .getElementById("profilePage")
-              .classList.remove("hidden");
-
-            document
-              .getElementById("pageTitle")
-              .textContent =
-              "Profile";
-
-          }
-
-        }
-      );
+      });
 
     });
 
 
-  /*
-  ============================================================
-  LOGOUT
-  ============================================================
-  */
+  /* ============================================================
+     LOGOUT
+  ============================================================ */
 
-  document.getElementById(
-    "logoutButton"
-  ).onclick = async () => {
+  document.getElementById("logoutButton").onclick =
+    async () => {
 
-    await supabaseClient.auth.signOut();
+      if (messageChannel) {
 
-  };
+        await supabaseClient
+          .removeChannel(messageChannel);
+
+        messageChannel = null;
+
+      }
+
+      await supabaseClient.auth.signOut();
+
+    };
 
 
-  /*
-  ============================================================
-  PEOPLE SEARCH
-  ============================================================
-  */
+  /* ============================================================
+     PEOPLE SEARCH
+  ============================================================ */
 
   const peopleSearch =
-    document.getElementById(
-      "peopleSearch"
-    );
-
+    document.getElementById("peopleSearch");
 
   peopleSearch.addEventListener(
     "input",
@@ -1828,34 +1663,27 @@
         peopleSearch.value.trim();
 
       const results =
-        document.getElementById(
-          "peopleResults"
-        );
+        document.getElementById("peopleResults");
 
       if (!query) {
 
         results.innerHTML = "";
-
         return;
+
       }
 
-      const {
-        data,
-        error
-      } =
+      const { data, error } =
         await supabaseClient
           .from("profiles")
-          .select(
-            "id, username, display_name"
-          )
-          .ilike(
-            "username",
-            `%${query}%`
-          )
-          .neq(
-            "id",
-            currentUser.id
-          )
+          .select(`
+            id,
+            username,
+            display_name,
+            avatar_url,
+            is_verified
+          `)
+          .ilike("username", `%${query}%`)
+          .neq("id", currentUser.id)
           .limit(20);
 
       if (error) {
@@ -1866,6 +1694,7 @@
           </p>`;
 
         return;
+
       }
 
       if (!data.length) {
@@ -1876,179 +1705,74 @@
           </p>`;
 
         return;
+
       }
 
       results.innerHTML =
-        data.map(user => `
+        data.map(user => {
 
-          <div class="person-card">
+          const name =
+            user.display_name ||
+            user.username ||
+            "Nomi user";
 
-            <div
-              class="avatar"
-              style="
-                margin:0;
-                width:45px;
-                height:45px;
-                font-size:15px;
-              "
-            >
-              ${escapeHTML(
-                getInitials(
-                  user.display_name ||
-                  user.username
-                )
-              )}
-            </div>
+          return `
 
-            <div style="flex:1">
+            <div class="profile-card person-card">
 
-              <strong>
-                ${escapeHTML(
-                  user.display_name ||
-                  user.username
-                )}
+              ${avatarHTML(user)}
 
-                ${verifiedBadge(user)}
-              </strong>
+              <div class="person-info">
 
-              <p>
-                @${escapeHTML(
-                  user.username || ""
-                )}
-              </p>
+                <strong>
+                  ${escapeHTML(name)}
+                  ${verifiedBadge(user)}
+                </strong>
+
+                <p>
+                  @${escapeHTML(user.username || "")}
+                </p>
+
+              </div>
+
+              <button
+                class="message-person"
+                onclick="startConversation('${user.id}')"
+              >
+                Message
+              </button>
 
             </div>
 
-            <button
-              class="send"
-              style="padding:9px 12px"
-              onclick="startConversation('${user.id}')"
-            >
-              Message
-            </button>
+          `;
 
-          </div>
-
-        `).join("");
-
-    });
-
-
-  /*
-  ============================================================
-  GET CONVERSATION MEMBERS
-  ============================================================
-  */
-
-  async function getConversationMembers(
-    conversationId
-  ) {
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("conversation_members")
-        .select(`
-          user_id
-        `)
-        .eq(
-          "conversation_id",
-          conversationId
-        );
-
-    if (error) {
-
-      console.error(error);
-
-      return [];
+        }).join("");
 
     }
-
-    return data || [];
-
-  }
+  );
 
 
-  /*
-  ============================================================
-  LOAD CONVERSATION NAME
-  ============================================================
-  */
-
-  async function getConversationName(
-    conversationId
-  ) {
-
-    /*
-      This supports a "name" column on conversations.
-
-      If the column doesn't exist yet, the query fails
-      and we fall back to "Conversation".
-    */
-
-    const {
-      data,
-      error
-    } =
-      await supabaseClient
-        .from("conversations")
-        .select(
-          "id, created_at, name"
-        )
-        .eq(
-          "id",
-          conversationId
-        )
-        .maybeSingle();
-
-    if (
-      !error &&
-      data
-    ) {
-
-      return data.name ||
-        "Conversation";
-
-    }
-
-    return "Conversation";
-
-  }
-
-
-  /*
-  ============================================================
-  LOAD CONVERSATIONS
-  ============================================================
-  */
+  /* ============================================================
+     CONVERSATIONS
+  ============================================================ */
 
   async function loadConversations() {
 
     const list =
-      document.getElementById(
-        "conversationList"
-      );
+      document.getElementById("conversationList");
 
-    const {
-      data,
-      error
-    } =
+    const { data, error } =
       await supabaseClient
         .from("conversation_members")
         .select(`
           conversation_id,
           conversations (
             id,
-            created_at,
-            name
+            name,
+            created_at
           )
         `)
-        .eq(
-          "user_id",
-          currentUser.id
-        );
+        .eq("user_id", currentUser.id);
 
     if (error) {
 
@@ -2056,219 +1780,265 @@
 
       list.innerHTML = `
         <div class="conversation">
-
-          <strong>
-            Unable to load conversations
-          </strong>
-
-          <span>
-            ${escapeHTML(error.message)}
-          </span>
-
+          <div class="conversation-info">
+            <strong>Unable to load</strong>
+            <span>${escapeHTML(error.message)}</span>
+          </div>
         </div>
       `;
 
       return;
+
     }
 
     if (!data?.length) {
 
       list.innerHTML = `
         <div class="conversation">
-
-          <strong>
-            No conversations yet
-          </strong>
-
-          <span>
-            Find someone in People to message.
-          </span>
-
+          <div class="conversation-info">
+            <strong>No conversations yet</strong>
+            <span>Find someone in People to message.</span>
+          </div>
         </div>
       `;
 
       return;
+
     }
 
     list.innerHTML = "";
 
     for (const item of data) {
 
+      if (!item.conversations) continue;
+
       const conversation =
-        item.conversations;
-
-      if (!conversation) continue;
-
-      const members =
-        await getConversationMembers(
-          item.conversation_id
-        );
-
-      let otherProfile = null;
-
-      const otherMember =
-        members.find(
-          member =>
-            member.user_id !== currentUser.id
-        );
-
-      if (otherMember) {
-
-        const {
-          data: profile
-        } =
-          await supabaseClient
-            .from("profiles")
-            .select(
-              "id, username, display_name"
-            )
-            .eq(
-              "id",
-              otherMember.user_id
-            )
-            .maybeSingle();
-
-        otherProfile = profile;
-
-        if (profile) {
-
-          conversationProfiles[
-            item.conversation_id
-          ] = profile;
-
-        }
-
-      }
-
-
-      let title =
-        conversation.name ||
-        (
-          otherProfile
-            ? (
-              otherProfile.display_name ||
-              `@${otherProfile.username}`
-            )
-            : "Conversation"
-        );
-
-
-      const element =
         document.createElement("div");
 
-      element.className =
+      conversation.className =
         "conversation";
 
-      element.dataset.id =
+      conversation.dataset.id =
         item.conversation_id;
 
-      element.innerHTML = `
+      const conversationName =
+        item.conversations.name ||
+        "Conversation";
 
-        <strong>
+      conversation.innerHTML = `
 
-          ${escapeHTML(title)}
+        <div
+          class="avatar small-avatar"
+          id="conversationAvatar-${item.conversation_id}"
+        >
+          ⚡
+        </div>
 
-          ${
-            otherProfile
-              ? verifiedBadge(otherProfile)
-              : ""
-          }
+        <div class="conversation-info">
 
-        </strong>
+          <strong>
+            ${escapeHTML(conversationName)}
+          </strong>
 
-        <span>
-          ${
-            otherProfile
-              ? `@${escapeHTML(
-                  otherProfile.username || ""
-                )}`
-              : "Tap to open"
-          }
-        </span>
+          <span>
+            Open conversation
+          </span>
+
+        </div>
 
         <button
-          class="rename-conversation"
-          title="Rename"
+          class="conversation-delete"
+          title="Delete conversation"
         >
-          ✎
+          ×
         </button>
 
       `;
 
-
-      element.addEventListener(
+      conversation.addEventListener(
         "click",
-        event => {
+        () => openConversation(
+          item.conversation_id
+        )
+      );
 
-          if (
-            event.target.closest(
-              ".rename-conversation"
-            )
-          ) {
+      const deleteButton =
+        conversation.querySelector(
+          ".conversation-delete"
+        );
 
-            return;
-          }
+      deleteButton.addEventListener(
+        "click",
+        async event => {
 
-          openConversation(
-            item.conversation_id
+          event.stopPropagation();
+
+          await deleteConversation(
+            item.conversation_id,
+            conversationName
           );
 
         }
       );
 
+      list.appendChild(conversation);
 
-      element
-        .querySelector(
-          ".rename-conversation"
-        )
-        .addEventListener(
-          "click",
-          event => {
+      /*
+        Try to find the other member and use
+        their profile picture as the conversation avatar.
+      */
 
-            event.stopPropagation();
+      const { data: members } =
+        await supabaseClient
+          .from("conversation_members")
+          .select(`
+            user_id,
+            profiles (
+              id,
+              username,
+              display_name,
+              avatar_url,
+              is_verified
+            )
+          `)
+          .eq(
+            "conversation_id",
+            item.conversation_id
+          )
+          .neq(
+            "user_id",
+            currentUser.id
+          )
+          .limit(1);
 
-            openRenameModal(
-              item.conversation_id,
-              conversation.name ||
-              ""
-            );
+      const otherProfile =
+        members?.[0]?.profiles;
 
-          }
+      const avatarElement =
+        document.getElementById(
+          `conversationAvatar-${item.conversation_id}`
         );
 
+      if (avatarElement && otherProfile) {
 
-      list.appendChild(element);
+        if (otherProfile.avatar_url) {
+
+          avatarElement.innerHTML =
+            `<img src="${escapeHTML(otherProfile.avatar_url)}" alt="">`;
+
+        } else {
+
+          avatarElement.textContent =
+            getInitials(
+              otherProfile.display_name ||
+              otherProfile.username
+            );
+
+        }
+
+      }
 
     }
 
   }
 
 
-  /*
-  ============================================================
-  START CONVERSATION
-  ============================================================
-  */
+  /* ============================================================
+     DELETE CONVERSATION
+  ============================================================ */
+
+  async function deleteConversation(
+    conversationId,
+    conversationName
+  ) {
+
+    const confirmed =
+      confirm(
+        `Delete "${conversationName}"?\n\n` +
+        `This will permanently delete the conversation ` +
+        `and its messages for everyone.`
+      );
+
+    if (!confirmed) return;
+
+    const { error } =
+      await supabaseClient
+        .from("conversations")
+        .delete()
+        .eq("id", conversationId);
+
+    if (error) {
+
+      alert(error.message);
+      return;
+
+    }
+
+    if (
+      currentConversation === conversationId
+    ) {
+
+      currentConversation = null;
+
+      if (messageChannel) {
+
+        await supabaseClient
+          .removeChannel(messageChannel);
+
+        messageChannel = null;
+
+      }
+
+      document.getElementById(
+        "chatTitle"
+      ).textContent =
+        "Select a conversation";
+
+      document.getElementById(
+        "chatSubtitle"
+      ).textContent = "";
+
+      document.getElementById(
+        "renameConversationButton"
+      ).classList.add("hidden");
+
+      document.getElementById(
+        "messageInput"
+      ).disabled = true;
+
+      document.querySelector(
+        ".send"
+      ).disabled = true;
+
+      document.getElementById(
+        "messages"
+      ).innerHTML = `
+        <div class="empty-chat">
+          Select a conversation to start messaging.
+        </div>
+      `;
+
+    }
+
+    await loadConversations();
+
+  }
+
+
+  /* ============================================================
+     START CONVERSATION
+  ============================================================ */
 
   window.startConversation =
     async function(otherUserId) {
 
       if (!currentUser) return;
 
-
-      const {
-        data: myMemberships
-      } =
+      const { data: myMemberships } =
         await supabaseClient
           .from("conversation_members")
-          .select(
-            "conversation_id"
-          )
-          .eq(
-            "user_id",
-            currentUser.id
-          );
-
+          .select("conversation_id")
+          .eq("user_id", currentUser.id);
 
       if (myMemberships?.length) {
 
@@ -2277,25 +2047,16 @@
             x => x.conversation_id
           );
 
-
-        const {
-          data: existing
-        } =
+        const { data: existing } =
           await supabaseClient
             .from("conversation_members")
-            .select(
-              "conversation_id"
-            )
-            .eq(
-              "user_id",
-              otherUserId
-            )
+            .select("conversation_id")
+            .eq("user_id", otherUserId)
             .in(
               "conversation_id",
               conversationIds
             )
             .limit(1);
-
 
         if (existing?.length) {
 
@@ -2315,66 +2076,61 @@
 
       }
 
-
-      const {
-        data: conversation,
-        error
-      } =
+      const { data: conversation, error } =
         await supabaseClient
           .from("conversations")
-          .insert({})
+          .insert({
+            name: null
+          })
           .select()
           .single();
-
 
       if (error) {
 
         alert(error.message);
-
         return;
 
       }
 
-
-      const {
-        error: memberError
-      } =
+      const { error: memberError } =
         await supabaseClient
           .from("conversation_members")
           .insert([
             {
               conversation_id:
                 conversation.id,
-
               user_id:
                 currentUser.id
             },
-
             {
               conversation_id:
                 conversation.id,
-
               user_id:
                 otherUserId
             }
           ]);
 
-
       if (memberError) {
 
-        alert(memberError.message);
+        /*
+          Clean up conversation if adding members failed.
+        */
 
+        await supabaseClient
+          .from("conversations")
+          .delete()
+          .eq("id", conversation.id);
+
+        alert(memberError.message);
         return;
 
       }
-
 
       await loadConversations();
 
       await openConversation(
         conversation.id
       );
-
 
       document
         .querySelector(
@@ -2385,11 +2141,9 @@
     };
 
 
-  /*
-  ============================================================
-  OPEN CONVERSATION
-  ============================================================
-  */
+  /* ============================================================
+     OPEN CONVERSATION
+  ============================================================ */
 
   async function openConversation(
     conversationId
@@ -2398,58 +2152,92 @@
     currentConversation =
       conversationId;
 
+    const { data: conversation } =
+      await supabaseClient
+        .from("conversations")
+        .select("id, name")
+        .eq("id", conversationId)
+        .maybeSingle();
 
-    const profile =
-      conversationProfiles[
-        conversationId
-      ];
+    if (!conversation) {
 
+      await loadConversations();
+      return;
+
+    }
 
     currentConversationName =
-      await getConversationName(
-        conversationId
+      conversation.name;
+
+    const { data: members } =
+      await supabaseClient
+        .from("conversation_members")
+        .select(`
+          user_id,
+          profiles (
+            id,
+            username,
+            display_name,
+            avatar_url,
+            is_verified
+          )
+        `)
+        .eq(
+          "conversation_id",
+          conversationId
+        );
+
+    const otherMember =
+      members?.find(
+        member =>
+          member.user_id !== currentUser.id
       );
 
+    const otherProfile =
+      otherMember?.profiles;
+
+    const title =
+      conversation.name ||
+      otherProfile?.display_name ||
+      otherProfile?.username ||
+      "Conversation";
 
     document.getElementById(
-      "chatTitleText"
-    ).textContent =
-      currentConversationName;
-
+      "chatTitle"
+    ).innerHTML =
+      escapeHTML(title) +
+      verifiedBadge(otherProfile);
 
     document.getElementById(
       "chatSubtitle"
-    ).innerHTML =
-      profile
-        ? `@${escapeHTML(
-            profile.username || ""
-          )} ${verifiedBadge(profile)}`
-        : "";
-
+    ).textContent =
+      conversation.name &&
+      otherProfile
+        ? `with @${otherProfile.username || ""}`
+        : otherProfile
+          ? `@${otherProfile.username || ""}`
+          : "";
 
     document
       .getElementById(
-        "renameHeaderButton"
+        "renameConversationButton"
       )
-      .classList.remove(
-        "hidden"
-      );
-
+      .classList.remove("hidden");
 
     document.getElementById(
       "messageInput"
     ).disabled = false;
 
-
     document.querySelector(
       ".send"
     ).disabled = false;
 
+    await loadMessages();
+
+    subscribeToMessages();
 
     document
-      .querySelectorAll(
-        ".conversation"
-      )
+      .querySelectorAll(".conversation")
       .forEach(element => {
 
         element.classList.toggle(
@@ -2460,191 +2248,82 @@
 
       });
 
-
-    await loadMessages();
-
-    subscribeToMessages();
-
   }
 
 
-  /*
-  ============================================================
-  RENAME CONVERSATION
-  ============================================================
-  */
+  /* ============================================================
+     RENAME CONVERSATION
+  ============================================================ */
 
-  const renameModal =
-    document.getElementById(
-      "renameModal"
-    );
+  document
+    .getElementById("renameConversationButton")
+    .addEventListener("click", async () => {
 
-  const conversationNameInput =
-    document.getElementById(
-      "conversationNameInput"
-    );
+      if (!currentConversation) return;
 
-  let renameConversationId = null;
+      const currentName =
+        currentConversationName || "";
 
-
-  function openRenameModal(
-    conversationId,
-    currentName
-  ) {
-
-    renameConversationId =
-      conversationId;
-
-    conversationNameInput.value =
-      currentName || "";
-
-    document.getElementById(
-      "renameMessage"
-    ).textContent = "";
-
-    renameModal.classList.remove(
-      "hidden"
-    );
-
-    setTimeout(
-      () =>
-        conversationNameInput.focus(),
-      50
-    );
-
-  }
-
-
-  document.getElementById(
-    "cancelRename"
-  ).onclick = () => {
-
-    renameModal.classList.add(
-      "hidden"
-    );
-
-    renameConversationId = null;
-
-  };
-
-
-  document.getElementById(
-    "renameHeaderButton"
-  ).onclick = () => {
-
-    if (!currentConversation) return;
-
-    openRenameModal(
-      currentConversation,
-      currentConversationName ===
-        "Conversation"
-        ? ""
-        : currentConversationName
-    );
-
-  };
-
-
-  document.getElementById(
-    "saveRename"
-  ).onclick = async () => {
-
-    if (!renameConversationId)
-      return;
-
-
-    const newName =
-      conversationNameInput
-        .value
-        .trim();
-
-
-    const message =
-      document.getElementById(
-        "renameMessage"
-      );
-
-
-    const {
-      error
-    } =
-      await supabaseClient
-        .from("conversations")
-        .update({
-          name:
-            newName || null
-        })
-        .eq(
-          "id",
-          renameConversationId
+      const newName =
+        prompt(
+          "Enter a new conversation name:",
+          currentName
         );
 
+      if (newName === null) return;
 
-    if (error) {
+      const trimmed =
+        newName.trim();
 
-      /*
-        If you get:
-        "column conversations.name does not exist"
+      if (trimmed.length > 100) {
 
-        create the column in Supabase:
+        alert(
+          "Conversation names must be 100 characters or less."
+        );
 
-        ALTER TABLE public.conversations
-        ADD COLUMN name text;
-      */
+        return;
 
-      message.textContent =
-        error.message;
+      }
 
-      return;
+      const { data, error } =
+        await supabaseClient
+          .from("conversations")
+          .update({
+            name: trimmed || null
+          })
+          .eq("id", currentConversation)
+          .select()
+          .single();
 
-    }
+      if (error) {
 
+        alert(error.message);
+        return;
 
-    if (
-      renameConversationId ===
-      currentConversation
-    ) {
+      }
 
       currentConversationName =
-        newName ||
-        "Conversation";
+        data.name;
 
-      document.getElementById(
-        "chatTitleText"
-      ).textContent =
-        currentConversationName;
+      await loadConversations();
 
-    }
+      await openConversation(
+        currentConversation
+      );
 
-
-    renameModal.classList.add(
-      "hidden"
-    );
+    });
 
 
-    await loadConversations();
-
-  };
-
-
-  /*
-  ============================================================
-  LOAD MESSAGES
-  ============================================================
-  */
+  /* ============================================================
+     LOAD MESSAGES
+  ============================================================ */
 
   async function loadMessages() {
 
     const container =
-      document.getElementById(
-        "messages"
-      );
+      document.getElementById("messages");
 
-
-    const {
-      data,
-      error
-    } =
+    const { data, error } =
       await supabaseClient
         .from("messages")
         .select("*")
@@ -2654,48 +2333,85 @@
         )
         .order(
           "created_at",
-          {
-            ascending: true
-          }
+          { ascending: true }
         );
-
 
     if (error) {
 
       console.error(error);
 
-      container.innerHTML =
-        `<div class="empty-chat">
+      container.innerHTML = `
+        <div class="empty-chat">
           Unable to load messages.
-        </div>`;
+        </div>
+      `;
 
       return;
+
     }
 
+    if (!data?.length) {
 
-    if (!data.length) {
-
-      container.innerHTML =
-        `<div class="empty-chat">
+      container.innerHTML = `
+        <div class="empty-chat">
           No messages yet. Say hello! ⚡
-        </div>`;
+        </div>
+      `;
 
       return;
-    }
 
+    }
 
     container.innerHTML = "";
 
+    /*
+      Load sender profiles for the messages.
+    */
 
-    for (const message of data) {
+    const senderIds =
+      [
+        ...new Set(
+          data.map(message =>
+            message.sender_id
+          )
+        )
+      ];
 
-      await renderMessage(
-        message,
-        false
-      );
+    let profiles = [];
+
+    if (senderIds.length) {
+
+      const { data: profileData } =
+        await supabaseClient
+          .from("profiles")
+          .select(`
+            id,
+            username,
+            display_name,
+            avatar_url,
+            is_verified
+          `)
+          .in("id", senderIds);
+
+      profiles =
+        profileData || [];
 
     }
 
+    data.forEach(message => {
+
+      const profile =
+        profiles.find(
+          p =>
+            p.id === message.sender_id
+        );
+
+      renderMessage(
+        message,
+        profile
+      );
+
+    });
 
     container.scrollTop =
       container.scrollHeight;
@@ -2703,159 +2419,91 @@
   }
 
 
-  /*
-  ============================================================
-  RENDER MESSAGE
-  ============================================================
-  */
+  /* ============================================================
+     RENDER MESSAGE
+  ============================================================ */
 
-  async function renderMessage(
+  function renderMessage(
     message,
-    scroll = true
+    profile
   ) {
 
     const container =
-      document.getElementById(
-        "messages"
+      document.getElementById("messages");
+
+    const row =
+      document.createElement("div");
+
+    row.className =
+      "message-row" +
+      (
+        message.sender_id === currentUser.id
+          ? " mine"
+          : ""
       );
-
-
-    if (
-      container.querySelector(
-        `.message-row[data-message-id="${message.id}"]`
-      )
-    ) {
-
-      return;
-
-    }
-
-
-    let profile =
-      null;
-
-
-    if (
-      message.sender_id ===
-      currentUser.id
-    ) {
-
-      profile =
-        currentProfile;
-
-    } else {
-
-      const {
-        data
-      } =
-        await supabaseClient
-          .from("profiles")
-          .select(
-            "id, username, display_name"
-          )
-          .eq(
-            "id",
-            message.sender_id
-          )
-          .maybeSingle();
-
-      profile = data;
-
-    }
-
 
     const displayName =
       profile?.display_name ||
       profile?.username ||
       "Nomi user";
 
-
-    const row =
-      document.createElement(
-        "div"
-      );
-
-
-    row.className =
-      "message-row" +
-      (
-        message.sender_id ===
-        currentUser.id
-          ? " mine"
-          : ""
-      );
-
-
-    row.dataset.messageId =
-      message.id;
-
-
-    const author =
-      document.createElement(
-        "div"
-      );
-
-
-    author.className =
-      "message-author";
-
-
-    author.innerHTML =
-      escapeHTML(displayName) +
+    const badge =
       verifiedBadge(profile);
 
+    const avatar =
+      document.createElement("div");
 
-    const bubble =
-      document.createElement(
-        "div"
-      );
+    avatar.className =
+      "avatar message-avatar";
 
+    if (profile?.avatar_url) {
 
-    bubble.className =
-      "bubble" +
-      (
-        message.sender_id ===
-        currentUser.id
-          ? " mine"
-          : ""
-      );
+      avatar.innerHTML =
+        `<img src="${escapeHTML(profile.avatar_url)}" alt="">`;
 
+    } else {
 
-    bubble.innerHTML = `
-      ${escapeHTML(
-        message.content || ""
-      )}
-
-      <span class="bubble-time">
-        ${formatTime(
-          message.created_at
-        )}
-      </span>
-    `;
-
-
-    row.appendChild(author);
-
-    row.appendChild(bubble);
-
-    container.appendChild(row);
-
-
-    if (scroll) {
-
-      container.scrollTop =
-        container.scrollHeight;
+      avatar.textContent =
+        getInitials(displayName);
 
     }
+
+    const content =
+      document.createElement("div");
+
+    content.className =
+      "message-content";
+
+    content.innerHTML = `
+
+      <div class="sender-name">
+        ${escapeHTML(displayName)}
+        ${badge}
+      </div>
+
+      <div class="bubble">
+
+        ${escapeHTML(message.content || "")}
+
+        <span class="bubble-time">
+          ${formatTime(message.created_at)}
+        </span>
+
+      </div>
+
+    `;
+
+    row.appendChild(avatar);
+    row.appendChild(content);
+
+    container.appendChild(row);
 
   }
 
 
-  /*
-  ============================================================
-  SEND MESSAGE
-  ============================================================
-  */
+  /* ============================================================
+     SEND MESSAGE
+  ============================================================ */
 
   document
     .getElementById("messageForm")
@@ -2865,31 +2513,21 @@
 
         event.preventDefault();
 
-
-        if (!currentConversation)
-          return;
-
+        if (!currentConversation) return;
 
         const input =
           document.getElementById(
             "messageInput"
           );
 
-
         const content =
           input.value.trim();
 
-
-        if (!content)
-          return;
-
+        if (!content) return;
 
         input.disabled = true;
 
-
-        const {
-          error
-        } =
+        const { error } =
           await supabaseClient
             .from("messages")
             .insert({
@@ -2902,7 +2540,6 @@
               content
             });
 
-
         if (error) {
 
           alert(error.message);
@@ -2913,41 +2550,37 @@
 
         }
 
-
         input.disabled = false;
-
         input.focus();
 
       }
     );
 
 
-  /*
-  ============================================================
-  REALTIME
-  ============================================================
-  */
+  /* ============================================================
+     REALTIME
+  ============================================================ */
 
   function subscribeToMessages() {
 
     if (messageChannel) {
 
       supabaseClient
-        .removeChannel(
-          messageChannel
-        );
+        .removeChannel(messageChannel);
+
+      messageChannel = null;
 
     }
 
+    if (!currentConversation) return;
 
-    if (!currentConversation)
-      return;
-
+    const conversationId =
+      currentConversation;
 
     messageChannel =
       supabaseClient
         .channel(
-          `messages-${currentConversation}`
+          `messages-${conversationId}`
         )
         .on(
           "postgres_changes",
@@ -2956,15 +2589,26 @@
             schema: "public",
             table: "messages",
             filter:
-              `conversation_id=eq.${currentConversation}`
+              `conversation_id=eq.${conversationId}`
           },
           async payload => {
+
+            /*
+              Don't add messages from an old
+              conversation to the current chat.
+            */
+
+            if (
+              currentConversation !==
+              conversationId
+            ) {
+              return;
+            }
 
             const container =
               document.getElementById(
                 "messages"
               );
-
 
             if (
               container.querySelector(
@@ -2976,11 +2620,29 @@
 
             }
 
+            const { data: profile } =
+              await supabaseClient
+                .from("profiles")
+                .select(`
+                  id,
+                  username,
+                  display_name,
+                  avatar_url,
+                  is_verified
+                `)
+                .eq(
+                  "id",
+                  payload.new.sender_id
+                )
+                .maybeSingle();
 
-            await renderMessage(
+            renderMessage(
               payload.new,
-              true
+              profile
             );
+
+            container.scrollTop =
+              container.scrollHeight;
 
           }
         )
@@ -2989,16 +2651,12 @@
   }
 
 
-  /*
-  ============================================================
-  SEARCH CONVERSATIONS
-  ============================================================
-  */
+  /* ============================================================
+     SEARCH CONVERSATIONS
+  ============================================================ */
 
   document
-    .getElementById(
-      "conversationSearch"
-    )
+    .getElementById("conversationSearch")
     .addEventListener(
       "input",
       event => {
@@ -3007,7 +2665,6 @@
           event.target.value
             .trim()
             .toLowerCase();
-
 
         document
           .querySelectorAll(
@@ -3020,7 +2677,6 @@
                 .toLowerCase();
 
             item.style.display =
-              !query ||
               text.includes(query)
                 ? ""
                 : "none";
@@ -3031,87 +2687,53 @@
     );
 
 
-  /*
-  ============================================================
-  HELPERS
-  ============================================================
-  */
+  /* ============================================================
+     HELPERS
+  ============================================================ */
 
   function escapeHTML(value) {
 
     return String(value)
-      .replaceAll(
-        "&",
-        "&amp;"
-      )
-      .replaceAll(
-        "<",
-        "&lt;"
-      )
-      .replaceAll(
-        ">",
-        "&gt;"
-      )
-      .replaceAll(
-        '"',
-        "&quot;"
-      )
-      .replaceAll(
-        "'",
-        "&#039;"
-      );
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
 
   }
 
 
   function formatTime(timestamp) {
 
-    if (!timestamp)
-      return "";
+    if (!timestamp) return "";
 
     return new Date(timestamp)
-      .toLocaleTimeString(
-        [],
-        {
-          hour: "2-digit",
-          minute: "2-digit"
-        }
-      );
+      .toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
 
   }
 
 
-  /*
-  ============================================================
-  INITIAL SESSION
-  ============================================================
-  */
+  /* ============================================================
+     INITIAL SESSION
+  ============================================================ */
 
   (async () => {
 
-    const {
-      data
-    } =
-      await supabaseClient
-        .auth
-        .getSession();
-
+    const { data } =
+      await supabaseClient.auth.getSession();
 
     if (data.session?.user) {
 
       currentUser =
         data.session.user;
 
-      authScreen.classList.add(
-        "hidden"
-      );
-
-      app.classList.remove(
-        "hidden"
-      );
+      authScreen.classList.add("hidden");
+      app.classList.remove("hidden");
 
       await loadProfile();
-
       await loadConversations();
 
     }
